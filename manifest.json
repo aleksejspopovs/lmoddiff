@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+
+  "name": "lmoddiff",
+  "description": "Access your LMOD assignments in all of your MIT classes from a single place.",
+  "version": "1.0",
+  "author": "Aleksejs Popovs <aleksejs@mit.edu>",
+
+  "icons": {
+    "128": "icons/icon_128.png",
+    "32": "icons/icon_32.png"
+  },
+
+  "browser_action": {
+    "default_icon": "icons/icon_32.png",
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+
+  "permissions": [
+    "https://learning-modules.mit.edu/",
+    "alarms",
+    "notifications"
+  ]
+}

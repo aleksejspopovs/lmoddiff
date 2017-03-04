@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <title>lmoddiff</title>
+    <style>
+      body {
+        width: 600px;
+        min-height: 400px;
+        margin: 0px;
+        padding: 0px;
+        overflow: scroll;
+      }
+
+      section {
+        background: #D1C4E9;
+        width: 100%;
+        padding: 5px;
+        margin: 5px;
+      }
+
+      section.error {
+        background: #FF9E80;
+      }
+
+      section.update {
+        background: #64FFDA;
+      }
+
+      section > h2 {
+        font-size: 14pt;
+        margin: 0px;
+        margin-bottom: 3px;
+      }
+
+      #class_block li {
+        margin-bottom: 6pt;
+      }
+    </style>
+    <link rel='stylesheet' href='./font-awesome-4.7.0/css/font-awesome.min.css'>
+    <script src='popup.js'></script>
+  </head>
+  <body>
+    <section>
+      <button id='manual_sync'>Sync manually</button>
+      <button id='clear_storage'>Delete assignment cache</button>
+      <label><input type='checkbox' id='autosync_box'> Auto-sync</label>
+      <label><input type='checkbox' id='notifications_box'> Show notifications</label>
+    </section>
+    <section class='error' id='auth_error'>
+      Authentication failed. This probably means that your LMOD session expired and lmoddiff couldn't initiate a new one because Shibboleth is asking it for a password or Duo authentication or something else went wrong. Fix this by <a target='_blank' href='https://learning-modules.mit.edu/Shibboleth.sso/Login?target=https%3A%2F%2Flearning-modules.mit.edu%2F'>authenticating to LMOD</a> and then pressing “Sync manually” above. For a more permanent solution, ensure you're using certificates to authenticate and choose “remember this device for 30 days” when authenticating with Duo.
+    </section>
+    <section class='update' id='update_block'>
+      The most recent synchronizations have detected the following updates:
+      <ul id='update_list'>
+      </ul>
+      <button id='clear_updates'>Clear all</button>
+    </section>
+    <span id='class_block'>
+    </span>
+  </body>
+</html>
+
