@@ -68,6 +68,14 @@ function storage_set_notifications(state) {
     localStorage['notifications'] = state;
 }
 
+function storage_get_grade_visibility() {
+    return !(localStorage['grade_visibility'] === 'false');
+}
+
+function storage_set_grade_visibility(state) {
+    localStorage['grade_visibility'] = state;
+}
+
 
 // DOM MANIPULATION
 
@@ -108,6 +116,11 @@ function set_autosync_state(state) {
 function notifications_toggle(event) {
     storage_set_notifications(!storage_get_notifications());
     $('notifications_box').checked = storage_get_notifications();
+}
+
+function grade_visibility_toggle(event) {
+    storage_set_grade_visibility(!storage_get_grade_visibility());
+    update_display();
 }
 
 function clear_updates(event) {
@@ -206,6 +219,7 @@ function update_display() {
     // classes and assignments
     var classOrder = storage_get_classes();
     var classBlock = $id('class_block');
+    var gradeVisbility = storage_get_grade_visibility();
     remove_all_children(classBlock);
     classOrder.map(function (classId) {
         var class_ = classes[classId];
@@ -228,7 +242,13 @@ function update_display() {
         class_.assignmentIds.map(function (assignmentId) {
             var assignment = class_.assignments[assignmentId];
 
-            var grade = assignment.grade || "??";
+            var grade;
+            if (gradeVisbility) {
+                grade = assignment.grade || "??";
+            } else {
+                grade = assignment.grade ? "hidden" : "unset";
+            }
+
             var li = document.createElement('li');
 
             li.id = 'assignment_' + classId + '_' + assignmentId;
@@ -268,11 +288,10 @@ window.addEventListener('load', function() {
     $id('autosync_box').checked = storage_get_autosync_state();
     $id('notifications_box').addEventListener('click', notifications_toggle);
     $id('notifications_box').checked = storage_get_notifications();
-
+    $id('grades_box').addEventListener('click', grade_visibility_toggle);
+    $id('grades_box').checked = storage_get_grade_visibility();
 
     update_display();
-
-    $id('')
 });
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
