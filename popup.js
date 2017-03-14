@@ -267,9 +267,14 @@ function update_display() {
                 objects.push(assignment.commentCount + ' <i class="fa fa-comments" title="comments"></i>');
             }
 
-            li.innerHTML = '<div><strong>' + assignment.name + '</strong>, due ' + assignment.dueDate + '</div>' +
-                '<div>Grade: <strong>' + grade + '</strong>/' + assignment.maxGrade + '. ' +
+            li.innerHTML = '<div><strong>' + assignment.name + '</strong>, due ' + assignment.dueDate + '</div>';
+            if (gradeVisbility) {
+                li.innerHTML += '<div>Grade: <strong>' + grade + '</strong>/' + assignment.maxGrade + '. ' +
                 objects.join(', ') + '</div>';
+
+            } else {
+                li.innerHTML += '' + objects.join(', ') + '</div>';
+            }
 
             ul.appendChild(li);
         })
